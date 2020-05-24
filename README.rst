@@ -1,6 +1,9 @@
 loganom
 =======
 
+.. image:: https://travis-ci.org/dbaio/loganom.svg?branch=master
+    :target: https://travis-ci.org/dbaio/loganom
+
 **loganom** is a tool that checks log files in search for anomalies.
 Many small and medium companies that have only local users (in the
 same country) can use loganom.
