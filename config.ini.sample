@@ -1,0 +1,32 @@
+[GENERAL]
+# Check if the ip address can be ignored, based on a list of name patterns
+pattern_ip = amazonaws.com
+    google
+    .net.br
+    .com.br
+
+# Check if the ip address can be ignored based on it's ASN
+pattern_org = AS8075
+    AS36351
+# AS8075   Microsoft Corporation
+# AS36351  SoftLayer Technologies Inc
+
+# country_ignore can be a list
+country_ignore = BR
+
+ipinfo_token = XXXXXXXX
+
+[SMTP]
+enabled = False
+from = your_mail@from
+to = your_mail@to
+host = localhost
+port = 587
+ssl = False
+user = username
+pass = password
+subject = SMTP authentication, anomalies found...
+
+[MATTERMOST]
+enabled = False
+url =
