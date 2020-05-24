@@ -7,7 +7,7 @@ with open("README.rst", "r") as fh:
 
 setup(
     name="loganom",
-    version="0.0.3",
+    version="0.0.4",
     author="Danilo G. Baio",
     author_email="dbaio@bsd.com.br",
     description="Log analyzer to discover anomalies",

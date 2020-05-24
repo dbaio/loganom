@@ -1,12 +1,13 @@
 Changelog
 =========
 
-Version 0.0.X
+Version 0.0.4
 -------------
 
-:Date: Not released
+:Date: May 24, 2020
 
 * Add Sphinx documentation
+* Add tests to sdist
 
 
 Version 0.0.3
