@@ -15,6 +15,9 @@ setup(
     long_description=long_description,
     long_description_content_type="text/x-rst",
     url="https://github.com/dbaio/loganom",
+    project_urls={
+        "Documentation": "https://loganom.readthedocs.io/en/latest/",
+    },
     platforms=["any"],
     packages=['loganom'],
     package_dir={"loganom": "loganom"},
