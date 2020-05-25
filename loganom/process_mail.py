@@ -52,7 +52,7 @@ def process_mail(dict_general, temp_set, settings):
                     # IP Invalid/Bogon
                     continue
 
-                logging.debug('  Contry: %s', country)
+                logging.debug('  Contry: %s - %s - %s', country, city, org)
 
                 if country not in country_ignore:
                     if not check_org_on_whitelist(org, pattern_org):
@@ -62,6 +62,8 @@ def process_mail(dict_general, temp_set, settings):
                             city,
                             reverse_dns,
                             org))
+                else:
+                    logging.debug('    %s skipped', country)
 
         if len(temp_list) > 1:
             dict_issues[email_address] = temp_list
