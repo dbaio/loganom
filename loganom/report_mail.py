@@ -28,7 +28,7 @@ def send_report_mail(plain_text, settings):
     mailer.start()
 
     message = Message(author=settings.smtp_from, to=settings.smtp_to)
-    message.subject = settings.subject
+    message.subject = settings.smtp_subject
     message.plain = plain_text
 
     mailer.send(message)
