@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 0.0.6
+-------------
+
+:Date: May 25, 2020
+
+* Fix email report
+
+
 Version 0.0.5
 -------------
 
