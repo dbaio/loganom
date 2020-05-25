@@ -4,7 +4,7 @@
 from collections import defaultdict
 import logging
 
-from loganom import utils, process_mail, report_mail
+from loganom import utils, process_mail, report_mail, report_mm
 
 
 def postfix_sasl(settings, args):
@@ -58,5 +58,8 @@ def postfix_sasl(settings, args):
 
         if settings.smtp_enabled:
             report_mail.send_report_mail(report_text, settings)
+
+        if settings.mm_enabled:
+            report_mm.send_report_mm(report_text, settings)
     else:
         logging.debug('No anomalies')

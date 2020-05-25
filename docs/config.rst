@@ -36,4 +36,8 @@ config.ini:
 
     [MATTERMOST]
     enabled = False
-    url =
+    url = https://your_mm_url
+    api_key = XXXXXXXX
+    channel = channel
+    icon_url = https://your_icon_logo_url
+    username = username

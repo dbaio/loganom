@@ -64,7 +64,13 @@ def read_config(config_file):
     if strtobool(mm_enabled):
         try:
             my_config.set_mm(True,
-                             config.get('MATTERMOST', 'url'))
+                             config.get('MATTERMOST', 'url'),
+                             config.get('MATTERMOST', 'api_key'))
+
+            my_config.set_mm_options(config.get('MATTERMOST', 'channel'),
+                                     config.get('MATTERMOST', 'icon_url'),
+                                     config.get('MATTERMOST', 'username'))
+
         except configparser.NoOptionError:
             logging.info('Error reading config, MATTERMOST section')
             sys.exit(1)
@@ -88,17 +94,21 @@ class Config():
         self.country_ignore = country_ignore
 
         self.smtp_enabled = False
-        self.smtp_from = ""
-        self.smtp_to = ""
-        self.smtp_host = ""
-        self.smtp_port = ""
-        self.smtp_ssl = ""
-        self.smtp_user = ""
-        self.smtp_pass = ""
-        self.smtp_subject = ""
+        self.smtp_from = None
+        self.smtp_to = None
+        self.smtp_host = None
+        self.smtp_port = None
+        self.smtp_ssl = None
+        self.smtp_user = None
+        self.smtp_pass = None
+        self.smtp_subject = None
 
         self.mm_enabled = False
-        self.mm_url = ""
+        self.mm_url = None
+        self.mm_api_key = None
+        self.mm_channel = None
+        self.mm_icon_url = None
+        self.mm_username = None
 
 
     def set_smtp(self, enabled, smtp_from, smtp_to):
@@ -147,7 +157,7 @@ class Config():
         self.smtp_subject = smtp_subject
 
 
-    def set_mm(self, enabled, mm_url):
+    def set_mm(self, enabled, mm_url, mm_api_key):
         """Define MatterMost Notifications
 
         Arguments:
@@ -156,3 +166,18 @@ class Config():
         """
         self.mm_enabled = enabled
         self.mm_url = mm_url
+        self.mm_api_key = mm_api_key
+
+
+    def set_mm_options(self, mm_channel, mm_icon_url, mm_username):
+        """Define MatterMost Options
+
+        Arguments:
+            channel {string} -- Name of the channel
+            icon_url {string} -- URL with an image
+            username {string} -- Username from
+        """
+
+        self.mm_channel = mm_channel
+        self.mm_icon_url = mm_icon_url
+        self.mm_username = mm_username
