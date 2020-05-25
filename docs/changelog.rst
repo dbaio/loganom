@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 0.0.5
+-------------
+
+:Date: May 25, 2020
+
+* Add option to send report by Mattermost
+
+
 Version 0.0.4
 -------------
 
