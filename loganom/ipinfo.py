@@ -20,8 +20,8 @@ def check_geoip(ip_address, token):
     url = 'http://ipinfo.io/' + ip_address + '?token=' + token
 
     try:
-        answear = requests.get(url)
+        response = requests.get(url)
     except requests.RequestException:
         return False
 
-    return answear.json()
+    return response.json()
