@@ -3,6 +3,7 @@
 
 from collections import defaultdict
 import logging
+import ipaddress
 
 from loganom import utils, process_mail, report_mail, report_mm
 
@@ -39,7 +40,11 @@ def postfix_sasl(settings, args):
                 mail_ip_address = utils.clean_ip(lista.pop())
 
                 logging.debug('%s - %s', mail_user, mail_ip_address)
-                dict_general[mail_user].add(mail_ip_address)
+
+                if ipaddress.ip_address(mail_ip_address).is_private:
+                    logging.debug('%s private ip address, skipped', mail_ip_address)
+                else:
+                    dict_general[mail_user].add(mail_ip_address)
 
     logging.debug('End log reading...')
     temp_set = utils.process_dict(dict_general)

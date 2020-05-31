@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 0.0.7
+-------------
+
+:Date: Not released
+
+* Ignore private ip addresses
+
+
 Version 0.0.6
 -------------
 
