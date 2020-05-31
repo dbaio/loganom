@@ -33,7 +33,7 @@ Install using pip:
 
     pip install loganom
 
-Sources are available on `<https://github.com/dbaio/loganom>`_ .
+Sources are available on `<https://github.com/dbaio/loganom>`_.
 
-Documentation available on `<https://loganom.readthedocs.io/en/latest/>`_ .
+Documentation available on `<https://loganom.readthedocs.io/en/latest/>`_.
 

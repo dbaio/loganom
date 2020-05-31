@@ -50,19 +50,31 @@ Sample execution:
       188.69.X.Y - LT - Vilnius - md-188-69-195-171.omni.lt. - AS8764 Telia Lietuva, AB
 
 
-Sample script with **logtail**:
+Sample execution script with **logtail** and virtualenv:
 
 .. code-block:: sh
 
-    logtail /var/log/maillog > /var/log/maillog-loganom
+    #!/bin/sh
 
-    loganom postfix-sasl \
-        -c ~/.loganom-config.ini \
-        -l /var/log/maillog-loganom
+    LOG_LEVEL="DEBUG"  #DEBUG/INFO
+    CONFIG_INI="~/.loganom-config.ini"
+    LOG_READ="/var/log/maillog-loganom"
+    LOG_OUT="/var/log/loganom.log"
 
+    logtail /var/log/maillog > "$LOG_READ"
+
+    source ~/.venv/loganom/bin/activate
+
+    env LOGLEVEL="$LOG_LEVEL" \
+        loganom postfix-sasl \
+        -c "$CONFIG_INI" \
+        -l "$LOG_READ" > "$LOG_OUT" 2>&1
     RET=$?
-    :> /var/log/maillog-loganom
+
+    :> "$LOG_READ"
+
     exit $RET
+
 
 If you want to execute **loganom** for instance, in every hour, you can use
 **logtail** to get just the log lines that weren't processed yet, this will
