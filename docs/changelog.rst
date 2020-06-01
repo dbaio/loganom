@@ -4,7 +4,7 @@ Changelog
 Version 0.0.7
 -------------
 
-:Date: Not released
+:Date: May 31, 2020
 
 * Ignore private ip addresses
 * Add external script execution when an anomaly is found
