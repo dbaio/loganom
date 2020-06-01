@@ -7,6 +7,7 @@ Version 0.0.7
 :Date: Not released
 
 * Ignore private ip addresses
+* Add external script execution when an anomaly is found
 
 
 Version 0.0.6

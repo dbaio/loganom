@@ -5,21 +5,28 @@ Command line usage:
 
 .. code-block:: sh
 
-    loganom postfix-sasl -c config.ini -l logfile
+    $ loganom postfix-sasl -c config.ini -l logfile
+
+
+It's optional executing an external script when an anomaly is found:
+
+.. code-block:: sh
+
+    $ loganom postfix-sasl -c config.ini -l logfile -e /path/script.sh
 
 
 Debugging:
 
 .. code-block:: sh
 
-    LOGLEVEL=DEBUG loganom postfix-sasl -c config.ini -l logfile
+    $ LOGLEVEL=DEBUG loganom postfix-sasl -c config.ini -l logfile
 
 
 Sample execution:
 
 .. code-block:: sh
 
-    LOGLEVEL=DEBUG loganom postfix-sasl -c config.ini -l logfile
+    $ LOGLEVEL=DEBUG loganom postfix-sasl -c config.ini -l logfile
     DEBUG:	Starting validating configuration file...
     [postfix-sasl]
     DEBUG:	Starting "postfix-sasl"
@@ -79,3 +86,22 @@ Sample execution script with **logtail** and virtualenv:
 If you want to execute **loganom** for instance, in every hour, you can use
 **logtail** to get just the log lines that weren't processed yet, this will
 avoid reprocessing all log.
+
+
+Command line options:
+
+.. code-block:: sh
+
+    $ loganom --help
+    usage: main.py [-h] [-c CONFIG] [-l LOG] [-e EXEC] {postfix-sasl,foo}
+
+    positional arguments:
+    {postfix-sasl,foo}
+
+    optional arguments:
+    -h, --help              show this help message and exit
+    -c CONFIG, --config CONFIG
+                            Path for configuration file
+    -l LOG, --log LOG       Path for log file
+    -e EXEC, --exec EXEC    External script to be executed when an anomaly is
+                            found

@@ -5,7 +5,7 @@ from collections import defaultdict
 import logging
 import ipaddress
 
-from loganom import utils, process_mail, report_mail, report_mm
+from loganom import utils, process_mail, report_mail, report_mm, exec_cmd
 
 
 def postfix_sasl(settings, args):
@@ -50,10 +50,15 @@ def postfix_sasl(settings, args):
     temp_set = utils.process_dict(dict_general)
     temp_dict = process_mail.process_mail(dict_general, temp_set, settings)
 
-    # Report
+    # Results
     report_text = ""
     if len(temp_dict) > 0:
         for email in temp_dict.keys():
+
+            # Execute external script when an anomaly is found for each e-mail
+            if args.exec:
+                exec_cmd.external_exec(args.exec.name, email)
+
             report_text += "\nE-mail address: {}\n".format(email)
             for ip_auth in temp_dict[email]:
                 report_text += "\t{}\n".format(ip_auth)

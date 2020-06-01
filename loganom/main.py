@@ -36,6 +36,11 @@ def main():
                         help='Path for log file',
                         default='/var/log/maillog')
 
+    parser.add_argument('-e', '--exec',
+                        type=argparse.FileType('r'),
+                        help='External script to be executed when an anomaly is found',
+                        required=False)
+
     args = parser.parse_args()
 
     settings = config.read_config(args.config)
