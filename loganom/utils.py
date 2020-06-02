@@ -92,8 +92,10 @@ def check_org_on_whitelist(org_name, pattern_org):
                   True if it matches
     """
 
+    org = org_name.split()[0]
+
     for pattern in pattern_org:
-        if org_name == pattern:
+        if org == pattern:
             logging.debug('    %s skipped by %s', org_name, pattern)
             return True
 

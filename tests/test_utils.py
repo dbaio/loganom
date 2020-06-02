@@ -87,10 +87,30 @@ class TestCheckOrgOnWhitelist(unittest.TestCase):
     def setUp(self):
         """Populate list."""
 
-        self.pattern_org = ['AS8075', 'AS36351']
+        self.pattern_org = ['AS8075', 'AS36351', 'AS24940']
 
 
     def test_check_org_on_whitelist_true(self):
+        """Test for Check if the ip address can be ignored based on it's ASN."""
+
+        org_name = 'AS24940 Hetzner Online GmbH'
+
+        result = check_org_on_whitelist(org_name, self.pattern_org)
+
+        self.assertTrue(result)
+
+
+    def test_check_org_on_whitelist_false(self):
+        """Test for Check if the ip address can be ignored based on it's ASN."""
+
+        org_name = 'AS15169 Google LLC'
+
+        result = check_org_on_whitelist(org_name, self.pattern_org)
+
+        self.assertFalse(result)
+
+
+    def test_check_org_short_on_whitelist_true(self):
         """Test for Check if the ip address can be ignored based on it's ASN."""
 
         org_name = 'AS36351'
@@ -100,7 +120,7 @@ class TestCheckOrgOnWhitelist(unittest.TestCase):
         self.assertTrue(result)
 
 
-    def test_check_org_on_whitelist_false(self):
+    def test_check_org_short_on_whitelist_false(self):
         """Test for Check if the ip address can be ignored based on it's ASN."""
 
         org_name = 'AS10429'
