@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 0.0.8
+-------------
+
+:Date: June 02, 2020
+
+* Fix check_org_on_whitelist function
+
+
 Version 0.0.7
 -------------
 
