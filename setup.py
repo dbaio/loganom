@@ -32,6 +32,7 @@ setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
+        "Topic :: Communications :: Email"
     ],
     python_requires='>=3.6',
     zip_safe=False,

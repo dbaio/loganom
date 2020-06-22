@@ -11,21 +11,20 @@ loganom
 .. image:: https://badge.fury.io/py/loganom.svg
     :target: https://pypi.org/project/loganom/
 
-**loganom** is a tool that checks log files in search for anomalies.
-Many small and medium companies that have only local users (in the
-same country) can use loganom.
+**loganom** is a tool that checks mail log files in search for anomalies.
 
 The first processor check postfix sasl authentication.
 
-Usually when an account is compromised, attackers use several machines
-from their botnets to send emails (spam/virus/phishing/etc) with that
-credential.
+Usually when an account is compromised, attackers use several machines from
+their botnets to send emails (spam/virus/phishing/etc) with that credential.
 
-This can be observed when a user that usually connects from the same
-country, suddenly send emails from all around the world.
+This can be observed when a user that usually connects from the same country,
+suddenly send emails from all around the world.
 
-This is an experimental program.
+Many small and medium companies that have only local users (in the same
+country) can use this processor.
 
+This is an *experimental* program.
 
 Installation
 ------------
