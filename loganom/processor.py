@@ -112,7 +112,7 @@ def quota_high(settings, args):
 
     for email, quota_counter in dict_general.items():
         if quota_counter > int(args.quota_limit):
-            logging.debug('%s > %i', email, args.quota_limit)
+            logging.debug('%s > %i', email, int(args.quota_limit))
             report_text += "  {} ({})\n".format(email, quota_counter)
             email_quota_count += 1
 
