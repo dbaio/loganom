@@ -4,6 +4,7 @@ import unittest
 
 from collections import defaultdict
 from loganom.utils import clean_ip, process_dict, check_ip_on_whitelist, check_org_on_whitelist
+from loganom.utils import clean_email
 
 
 class TestCleanIp(unittest.TestCase):
@@ -128,3 +129,14 @@ class TestCheckOrgOnWhitelist(unittest.TestCase):
         result = check_org_on_whitelist(org_name, self.pattern_org)
 
         self.assertFalse(result)
+
+
+class TestCleanEmail(unittest.TestCase):
+    """Unittest for utils.clean_email()."""
+
+    def test_clean_email(self):
+        """Test for Clean a raw email address from the log file."""
+
+        raw_email = 'from=<user@domain.com>'
+        result = clean_email(raw_email)
+        self.assertEqual(result, 'user@domain.com')

@@ -27,8 +27,7 @@ their botnets to send emails (spam/virus/phishing/etc) with that credential.
 This can be observed when a user that usually connects from the same country,
 suddenly send emails from all around the world.
 
-Many small and medium companies that have only local users (in the same
-country) can use this processor.
+See more about in the :doc:`processor` section.
 
 This is an *experimental* program.
 
@@ -38,6 +37,7 @@ This is an *experimental* program.
    :caption: Contents:
 
    install
+   processor
    usage
    config
    changelog

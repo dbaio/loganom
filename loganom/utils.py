@@ -5,6 +5,20 @@ import re
 import logging
 
 
+def clean_email(raw_email):
+    """Clean a raw email address from the log file.
+
+    Arguments:
+        raw_email [string] -- from=<user@domain.com>
+
+    Returns:
+        [string] -- user@domain.com
+    """
+    temp1 = raw_email.split('from=<')[1]
+
+    return temp1.rstrip('>')
+
+
 def clean_ip(raw_ip):
     """Clean a raw ip address from the log file.
 

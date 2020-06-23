@@ -1,6 +1,15 @@
 Changelog
 =========
 
+Version 1.0.0
+-------------
+
+:Date: June 22, 2020
+
+* Add processor quota-high
+* Improve docs
+
+
 Version 0.0.8
 -------------
 
