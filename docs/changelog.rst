@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 1.0.1
+-------------
+
+:Date: June 23, 2020
+
+* Fix parameter --quota-limit
+
+
 Version 1.0.0
 -------------
 
