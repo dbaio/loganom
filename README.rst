@@ -1,8 +1,9 @@
 loganom
 =======
 
-.. image:: https://travis-ci.org/dbaio/loganom.svg?branch=master
-    :target: https://travis-ci.org/dbaio/loganom
+.. image:: https://github.com/dbaio/loganom/workflows/Python%20package/badge.svg
+    :target: https://github.com/dbaio/loganom/actions?query=workflow%3A%22Python+package%22
+    :alt: Python package Status
 
 .. image:: https://readthedocs.org/projects/loganom/badge/?version=latest
     :target: https://loganom.readthedocs.io/en/latest/?badge=latest
