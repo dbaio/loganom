@@ -8,6 +8,7 @@ import sys
 import argparse
 import logging
 
+from datetime import datetime
 from loganom import config
 from loganom.processor import postfix_sasl, quota_high
 
@@ -24,7 +25,7 @@ def main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('processor',
-                        choices=['postfix-sasl', 'quota-high', 'foo'],)
+                        choices=['postfix-sasl', 'quota-high'],)
 
     parser.add_argument('-c', '--config',
                         type=argparse.FileType('r'),
@@ -61,18 +62,14 @@ def main():
 
     settings = config.read_config(args.config)
 
-    if args.processor == 'foo':
-        print('[bar]')
-        logging.debug('Starting "bar"')
-        sys.exit(0)
-    elif args.processor == 'quota-high':
-        print('[quota-high]')
-        logging.debug('Starting "quota-high"')
+    current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    if args.processor == 'quota-high':
+        print('Starting quota-high ({})'.format(current_datetime))
         quota_high(settings, args)
         sys.exit(0)
     elif args.processor == 'postfix-sasl':
-        print('[postfix-sasl]')
-        logging.debug('Starting "postfix-sasl"')
+        print('Starting postfix-sasl ({})'.format(current_datetime))
         postfix_sasl(settings, args)
         sys.exit(0)
 
