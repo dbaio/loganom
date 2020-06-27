@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Unreleased
-----------
+Version 1.0.4
+-------------
 
 * Add timestamp on execution
 
