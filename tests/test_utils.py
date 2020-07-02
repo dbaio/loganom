@@ -140,3 +140,11 @@ class TestCleanEmail(unittest.TestCase):
         raw_email = 'from=<user@domain.com>'
         result = clean_email(raw_email)
         self.assertEqual(result, 'user@domain.com')
+
+
+    def test_clean_email_empty(self):
+        """Test for Clean a raw email address from the log file."""
+
+        raw_email = 'from=<>'
+        result = clean_email(raw_email)
+        self.assertEqual(result, '')

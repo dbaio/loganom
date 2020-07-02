@@ -98,11 +98,12 @@ def quota_high(settings, args):
 
         for line in log_file:
             if pattern in line:
-                mail_user_raw = re.search('from=<.+?>', line)
+                mail_user_raw = re.search('from=<.*?>', line)
 
                 mail_user = utils.clean_email(mail_user_raw.group(0))
 
-                dict_general[mail_user] += 1
+                if mail_user:
+                    dict_general[mail_user] += 1
 
     logging.debug('End log reading...')
 
