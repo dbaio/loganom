@@ -14,7 +14,7 @@ class TestConfigDefault(unittest.TestCase):
 
         # Simulating argparse dictionary
         self.config = OrderedDict()
-        self.config.name = "tests/data/config.ini"
+        self.config.name = "tests/data/config-sample.ini"
 
     def test_config_read_sample(self):
         """Test for Read the Sample Config File."""
