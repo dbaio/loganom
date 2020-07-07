@@ -1,10 +1,11 @@
 Changelog
 =========
 
-Unreleased
-----------
+Version 1.0.5
+-------------
 
 * Fix regex in quota_high when empty mail_from
+* Add basic configuration tests
 
 
 Version 1.0.4
