@@ -23,6 +23,9 @@ config.ini:
 
     ipinfo_token = XXXXXXXX
 
+    # List of email address that can be skipped
+    # email_skip =
+
     [SMTP]
     enabled = False
     from = your_mail@from

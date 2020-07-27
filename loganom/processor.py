@@ -42,10 +42,13 @@ def postfix_sasl(settings, args):
 
                 logging.debug('%s - %s', mail_user, mail_ip_address)
 
-                if ipaddress.ip_address(mail_ip_address).is_private:
-                    logging.debug('%s private ip address, skipped', mail_ip_address)
+                if mail_user not in settings.email_skip:
+                    if ipaddress.ip_address(mail_ip_address).is_private:
+                        logging.debug('%s private ip address, skipped', mail_ip_address)
+                    else:
+                        dict_general[mail_user].add(mail_ip_address)
                 else:
-                    dict_general[mail_user].add(mail_ip_address)
+                    logging.debug('\tskipped by email_skip config')
 
     logging.debug('End log reading...')
     temp_set = utils.process_dict(dict_general)
@@ -116,12 +119,16 @@ def quota_high(settings, args):
         logging.debug('%s (%i)', email, quota_counter)
 
         if quota_counter > int(args.quota_limit):
-            report_text += "  {} ({})\n".format(email, quota_counter)
-            email_quota_count += 1
 
-            # Execute external script when an anomaly is found for each e-mail
-            if args.exec:
-                exec_cmd.external_exec(args.exec.name, email)
+            if email not in settings.email_skip:
+                report_text += "  {} ({})\n".format(email, quota_counter)
+                email_quota_count += 1
+
+                # Execute external script when an anomaly is found for each e-mail
+                if args.exec:
+                    exec_cmd.external_exec(args.exec.name, email)
+            else:
+                logging.debug('\tskipped by email_skip config')
 
     if email_quota_count > 0:
         # Report in screen

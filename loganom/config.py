@@ -30,6 +30,11 @@ def read_config(config_file):
         logging.info('Error reading config, GENERAL section')
         sys.exit(1)
 
+    try:
+        my_config.set_email_skip(config.get('GENERAL', 'email_skip'))
+    except configparser.NoOptionError:
+        logging.debug('Optional config (email_skip) not found')
+
     # Get SMTP Section
     try:
         smtp_enabled = config.get('SMTP', 'enabled')
@@ -92,6 +97,7 @@ class Config():
         self.pattern_org = pattern_org
         self.ipinfo_token = ipinfo_token
         self.country_ignore = country_ignore
+        self.email_skip = []
 
         self.smtp_enabled = False
         self.smtp_from = None
@@ -177,7 +183,14 @@ class Config():
             icon_url {string} -- URL with an image
             username {string} -- Username from
         """
-
         self.mm_channel = mm_channel
         self.mm_icon_url = mm_icon_url
         self.mm_username = mm_username
+
+    def set_email_skip(self, email_skip):
+        """ Set Email Skip
+
+        Args:
+            email_skip (list): List of email address
+        """
+        self.email_skip = email_skip
