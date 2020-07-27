@@ -1,8 +1,8 @@
 Changelog
 =========
 
-unreleased
-----------
+Version 1.0.6
+-------------
 
 * Add config option for skipping email address
 
