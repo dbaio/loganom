@@ -2,7 +2,7 @@
 
 import logging
 import requests
-
+from loganom.utils import trim_report
 
 def mm_url_hook(url, api_key):
     """Build MammerMost URL with Api_key
@@ -28,8 +28,10 @@ def send_report_mm(plain_text, settings):
         bool -- True/False depending the request result
     """
 
+    report_text = '\n'.join(trim_report(plain_text))
+
     payload = dict()
-    payload['text'] = plain_text
+    payload['text'] = report_text
     payload['channel'] = settings.mm_channel
     payload['icon_url'] = settings.mm_icon_url
     payload['username'] = settings.mm_username

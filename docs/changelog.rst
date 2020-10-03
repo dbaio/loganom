@@ -4,9 +4,10 @@ Changelog
 Unreleased
 ----------
 
-* Convert to Python f-strings
+* Define characters limit for MatterMost (avoid spam), email reports are still
+  with full text
 * Fix Mailer on Python3.8
-
+* Convert to Python f-strings
 
 Version 1.0.6
 -------------

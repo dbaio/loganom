@@ -114,3 +114,25 @@ def check_org_on_whitelist(org_name, pattern_org):
             return True
 
     return False
+
+def trim_report(report_text):
+    """Let report text smaller for it not generate spam in the output
+
+    Args:
+        report_text ([list]): List of email address and its offending IPs
+
+    Returns:
+        ([list]): List of email address and its offending IPs (Smaller)
+    """
+
+    report_trimmed = []
+
+    for report_full in report_text:
+        if len(report_full) > 500:
+            report_temp = report_full[0:500]
+            report_temp += "\t[...]\n"
+            report_trimmed.append(report_temp)
+        else:
+            report_trimmed.append(report_full)
+
+    return report_trimmed

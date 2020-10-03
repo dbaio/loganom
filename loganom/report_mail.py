@@ -18,6 +18,8 @@ def send_report_mail(plain_text, settings):
     Returns:
     """
 
+    report_text = '\n'.join(plain_text)
+
     mailer = Mailer({
         'manager.use': 'futures',
         'transport.use': 'smtp',
@@ -33,7 +35,7 @@ def send_report_mail(plain_text, settings):
 
     message = Message(author=settings.smtp_from, to=settings.smtp_to)
     message.subject = settings.smtp_subject
-    message.plain = plain_text
+    message.plain = report_text
 
     mailer.send(message)
     mailer.stop()

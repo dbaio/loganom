@@ -55,7 +55,7 @@ def postfix_sasl(settings, args):
     temp_dict = process_mail.process_mail(dict_general, temp_set, settings)
 
     # Results
-    report_text = ""
+    report_text = []
     if len(temp_dict) > 0:
         for email in temp_dict.keys():
 
@@ -63,12 +63,13 @@ def postfix_sasl(settings, args):
             if args.exec:
                 exec_cmd.external_exec(args.exec.name, email)
 
-            report_text += f"\nE-mail address: {email}\n"
-            for ip_auth in temp_dict[email]:
-                report_text += f"\t{ip_auth}\n"
+            temp_text = f"E-mail address: {email}\n"
+            for ip_info in temp_dict[email]:
+                temp_text += f"\t{ip_info}\n"
+            report_text.append(temp_text)
 
         # Report in screen
-        print(report_text)
+        print('\n'.join(report_text))
 
         if settings.smtp_enabled:
             report_mail.send_report_mail(report_text, settings)
