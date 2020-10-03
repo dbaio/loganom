@@ -63,9 +63,9 @@ def postfix_sasl(settings, args):
             if args.exec:
                 exec_cmd.external_exec(args.exec.name, email)
 
-            report_text += "\nE-mail address: {}\n".format(email)
+            report_text += f"\nE-mail address: {email}\n"
             for ip_auth in temp_dict[email]:
-                report_text += "\t{}\n".format(ip_auth)
+                report_text += f"\t{ip_auth}\n"
 
         # Report in screen
         print(report_text)
@@ -112,7 +112,7 @@ def quota_high(settings, args):
 
     # Results
     email_quota_count = 0
-    report_text = "Email address(es) that hit quota limit (> {}):\n".format(args.quota_limit)
+    report_text = f"Email address(es) that hit quota limit (> {args.quota_limit}):\n"
 
     for email, quota_counter in dict_general.items():
 
@@ -121,7 +121,7 @@ def quota_high(settings, args):
         if quota_counter > int(args.quota_limit):
 
             if email not in settings.email_skip:
-                report_text += "  {} ({})\n".format(email, quota_counter)
+                report_text += f"  {email} ({quota_counter})\n"
                 email_quota_count += 1
 
                 # Execute external script when an anomaly is found for each e-mail

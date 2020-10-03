@@ -56,12 +56,7 @@ def process_mail(dict_general, temp_set, settings):
 
                 if country not in country_ignore:
                     if not check_org_on_whitelist(org, pattern_org):
-                        temp_list.append('{} - {} - {} - {} - {}'.format(
-                            ip_address,
-                            country,
-                            city,
-                            reverse_dns,
-                            org))
+                        temp_list.append(f'{country} - {city} - {ip_address} - {reverse_dns} - {org}')
                 else:
                     logging.debug('    %s skipped', country)
 

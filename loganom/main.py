@@ -65,11 +65,11 @@ def main():
     current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     if args.processor == 'quota-high':
-        print('Starting quota-high ({})'.format(current_datetime))
+        print(f'Starting quota-high ({current_datetime})')
         quota_high(settings, args)
         sys.exit(0)
     elif args.processor == 'postfix-sasl':
-        print('Starting postfix-sasl ({})'.format(current_datetime))
+        print(f'Starting postfix-sasl ({current_datetime})')
         postfix_sasl(settings, args)
         sys.exit(0)
 

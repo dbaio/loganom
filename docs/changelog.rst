@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Unreleased
+----------
+
+* Convert to Python f-strings
+* Fix Mailer on Python3.8
+
+
 Version 1.0.6
 -------------
 

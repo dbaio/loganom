@@ -14,7 +14,7 @@ def mm_url_hook(url, api_key):
     Returns:
         string - full MM url with api_key
     """
-    return '{}/hooks/{}'.format(url, api_key)
+    return f'{url}/hooks/{api_key}'
 
 
 def send_report_mm(plain_text, settings):
