@@ -1,8 +1,8 @@
 Changelog
 =========
 
-Unreleased
-----------
+Version 1.0.7
+-------------
 
 * Define characters limit for MatterMost (avoid spam), email reports are still
   with full text
