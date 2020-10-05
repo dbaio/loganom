@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Version 1.0.8
+-------------
+
+* Fix email report in the quota_high processor
+
 Version 1.0.7
 -------------
 
