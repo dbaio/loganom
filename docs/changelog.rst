@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Version 1.0.9
+-------------
+
+* Adjust quota_high report in screen
+
 Version 1.0.8
 -------------
 
