@@ -113,7 +113,8 @@ def quota_high(settings, args):
 
     # Results
     email_quota_count = 0
-    report_text = f"Email address(es) that hit quota limit (> {args.quota_limit}):\n"
+    report_text = []
+    report_text.append(f"Email address(es) that hit quota limit (> {args.quota_limit}):")
 
     for email, quota_counter in dict_general.items():
 
@@ -122,7 +123,7 @@ def quota_high(settings, args):
         if quota_counter > int(args.quota_limit):
 
             if email not in settings.email_skip:
-                report_text += f"  {email} ({quota_counter})\n"
+                report_text.append(f"  {email} ({quota_counter})")
                 email_quota_count += 1
 
                 # Execute external script when an anomaly is found for each e-mail
