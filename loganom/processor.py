@@ -134,7 +134,7 @@ def quota_high(settings, args):
 
     if email_quota_count > 0:
         # Report in screen
-        print(report_text)
+        print('\n'.join(report_text))
 
         if settings.smtp_enabled:
             report_mail.send_report_mail(report_text, settings)
