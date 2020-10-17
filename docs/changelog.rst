@@ -6,6 +6,7 @@ Unreleased
 ----------
 
 * Reformulate Config class
+* Add read_logfile() function
 
 Version 1.0.9
 -------------

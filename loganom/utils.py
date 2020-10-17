@@ -136,3 +136,20 @@ def trim_report(report_text):
             report_trimmed.append(report_full)
 
     return report_trimmed
+
+def read_logfile(file, pattern):
+    """Read a log file and return just the lines that match with a simple pattern.
+
+    Args:
+        file (path): Path for log file (default: /var/log/maillog)
+        pattern (string): Simple string pattern
+    """
+
+    with open(file) as log_file:
+        logging.debug('Start log reading...')
+
+        for line in log_file:
+            if pattern in line:
+                yield line
+
+    logging.debug('End log reading...')

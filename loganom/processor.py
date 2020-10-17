@@ -25,32 +25,26 @@ def postfix_sasl(settings, args):
     # Initialize empty dictionary
     dict_general = defaultdict(set)
 
-    with open(logfile_path) as log_file:
-        logging.debug('Start log reading...')
+    for line in utils.read_logfile(logfile_path, pattern_sasl):
+        lista = line.split()
+        mail_user = lista.pop().split('sasl_username=')[-1]
 
-        for line in log_file:
+        # >/dev/null, ignore this
+        lista.pop()
 
-            if pattern_sasl in line:
-                lista = line.split()
+        mail_ip_address = utils.clean_ip(lista.pop())
 
-                mail_user = lista.pop().split('sasl_username=')[-1]
+        logging.debug('%s - %s', mail_user, mail_ip_address)
 
-                # >/dev/null, ignore this
-                lista.pop()
+        if mail_user not in settings.email_skip:
+            if ipaddress.ip_address(mail_ip_address).is_private:
+                logging.debug('%s private ip address, skipped', mail_ip_address)
+            else:
+                dict_general[mail_user].add(mail_ip_address)
+        else:
+            logging.debug('\tskipped by email_skip config')
 
-                mail_ip_address = utils.clean_ip(lista.pop())
 
-                logging.debug('%s - %s', mail_user, mail_ip_address)
-
-                if mail_user not in settings.email_skip:
-                    if ipaddress.ip_address(mail_ip_address).is_private:
-                        logging.debug('%s private ip address, skipped', mail_ip_address)
-                    else:
-                        dict_general[mail_user].add(mail_ip_address)
-                else:
-                    logging.debug('\tskipped by email_skip config')
-
-    logging.debug('End log reading...')
     temp_set = utils.process_dict(dict_general)
     temp_dict = process_mail.process_mail(dict_general, temp_set, settings)
 
@@ -97,19 +91,14 @@ def quota_high(settings, args):
     # Initialize empty dictionary
     dict_general = defaultdict(int)
 
-    with open(logfile_path) as log_file:
-        logging.debug('Start log reading...')
+    for line in utils.read_logfile(logfile_path, pattern):
+        mail_user_raw = re.search('from=<.*?>', line)
 
-        for line in log_file:
-            if pattern in line:
-                mail_user_raw = re.search('from=<.*?>', line)
+        mail_user = utils.clean_email(mail_user_raw.group(0))
 
-                mail_user = utils.clean_email(mail_user_raw.group(0))
+        if mail_user:
+            dict_general[mail_user] += 1
 
-                if mail_user:
-                    dict_general[mail_user] += 1
-
-    logging.debug('End log reading...')
 
     # Results
     email_quota_count = 0

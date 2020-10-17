@@ -3,6 +3,7 @@
 
 # Workaround Python3.8 issue
 # https://github.com/marrow/mailer/issues/87
+# pylint: disable=C0413
 import sys
 sys.modules["cgi.parse_qsl"] = None
 from marrow.mailer import Message, Mailer
