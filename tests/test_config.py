@@ -36,7 +36,7 @@ class TestConfigDefault(unittest.TestCase):
             pytest.skip("config file not found")
 
         config_obj = read_config(self.config)
-        self.assertFalse(config_obj.smtp_enabled)
+        self.assertFalse(config_obj.smtp.enabled)
 
     def test_config_mm_false(self):
         """Test for Read the Sample Config File (MM Section)."""
@@ -47,7 +47,7 @@ class TestConfigDefault(unittest.TestCase):
             pytest.skip("config file not found")
 
         config_obj = read_config(self.config)
-        self.assertFalse(config_obj.mm_enabled)
+        self.assertFalse(config_obj.mattermost.enabled)
 
 
 class TestConfigTrue(unittest.TestCase):
@@ -69,7 +69,7 @@ class TestConfigTrue(unittest.TestCase):
             pytest.skip("config file not found")
 
         config_obj = read_config(self.config)
-        self.assertTrue(config_obj.smtp_enabled)
+        self.assertTrue(config_obj.smtp.enabled)
 
     def test_config_mm_true(self):
         """Test for Read the Sample Config File (MM Section)."""
@@ -80,4 +80,4 @@ class TestConfigTrue(unittest.TestCase):
             pytest.skip("config file not found")
 
         config_obj = read_config(self.config)
-        self.assertTrue(config_obj.mm_enabled)
+        self.assertTrue(config_obj.mattermost.enabled)

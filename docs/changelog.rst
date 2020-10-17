@@ -1,6 +1,12 @@
 Changelog
 =========
 
+
+Unreleased
+----------
+
+* Reformulate Config class
+
 Version 1.0.9
 -------------
 

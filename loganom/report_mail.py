@@ -13,7 +13,7 @@ def send_report_mail(plain_text, settings):
 
     Arguments:
         plain_text {string} -- Report body in plain text
-        settings {object} -- Settings from the class Config
+        settings (dict) -- Settings from the class Config.Smtp
 
     Returns:
     """
@@ -23,18 +23,18 @@ def send_report_mail(plain_text, settings):
     mailer = Mailer({
         'manager.use': 'futures',
         'transport.use': 'smtp',
-        'transport.host': settings.smtp_host,
-        'transport.tls': settings.smtp_ssl,
+        'transport.host': settings['host'],
+        'transport.tls': settings['ssl'],
         'transport.debug': False,
-        'transport.username': settings.smtp_user,
-        'transport.password': settings.smtp_pass,
+        'transport.username': settings['username'],
+        'transport.password': settings['password'],
         'transport.max_messages_per_connection': 5
     })
 
     mailer.start()
 
-    message = Message(author=settings.smtp_from, to=settings.smtp_to)
-    message.subject = settings.smtp_subject
+    message = Message(author=settings['mailfrom'], to=settings['mailto'])
+    message.subject = settings['subject']
     message.plain = report_text
 
     mailer.send(message)

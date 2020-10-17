@@ -6,6 +6,176 @@ import configparser
 from distutils.util import strtobool
 
 
+class Smtp():
+    """SMTP Config Options"""
+
+    # pylint: disable=too-many-instance-attributes
+    def __init__(self):
+        """Initialize SMTP Config"""
+        self.enabled = False
+        self.mailfrom = None
+        self.mailto = None
+        self.host = None
+        self.port = None
+        self.ssl = None
+        self.username = None
+        self.password = None
+        self.subject = None
+
+
+    def enable_smtp(self, mailfrom, mailto):
+        """Enable SMTP
+
+        Args:
+            mailfrom (string): E-mail from
+            mailto (string): E-mail to
+        """
+        self.enabled = True
+        self.mailfrom = mailfrom
+        self.mailto = mailto
+
+
+    def set_smtp_host(self, host, port, ssl):
+        """Set SMTP Host Details
+
+        Args:
+            host (string): SMTP server
+            port (integer): SMTP port
+            ssl (bool): SMTP ssl (True/False)
+        """
+        self.host = host
+        self.port = port
+        self.ssl = ssl
+
+
+    def set_auth(self, username, password):
+        """Set SMTP Authentication Credentials
+
+        Arguments:
+            username {string} -- SMTP User Authentication
+            password {string} -- SMTP User Password
+        """
+        self.username = username
+        self.password = password
+
+
+class MatterMost():
+    """MatterMost Config Options"""
+
+    def __init__(self):
+        """Initialize MatterMost Config"""
+        self.enabled = False
+        self.url = None
+        self.api_key = None
+        self.channel = None
+        self.icon_url = None
+        self.username = None
+
+
+    def enable_mm(self, url, api_key):
+        """Initialize MatterMost Config
+
+        Arguments:
+            url {string} -- MatterMost URL
+            api_key {string} -- MatterMost API Key
+        """
+        self.enabled = True
+        self.url = url
+        self.api_key = api_key
+
+
+    def set_options(self, channel, icon_url, username):
+        """Define MatterMost Options
+
+        Arguments:
+            channel {string} -- Name of the channel
+            icon_url {string} -- URL with an image
+            username {string} -- Username from
+        """
+        self.channel = channel
+        self.icon_url = icon_url
+        self.username = username
+
+
+    def get_url_hook(self):
+        """Build MammerMost URL with Api_key
+
+        Returns:
+            string - full MM url with api_key
+        """
+        return f'{self.url}/hooks/{self.api_key}'
+
+
+class Config():
+    """Config Class to store all configurations."""
+
+    def __init__(self, pattern_ip, pattern_org, ipinfo_token, country_ignore):
+        """Initialize Configuration
+
+        Args:
+            pattern_ip (list): List of ip name patterns that will be ignored
+            pattern_org (list): List of ASN's that will be ignored
+            ipinfo_token (string): IPInfo Api Token
+            country_ignore (list): List of country codes that will be ignored
+        """
+        self.pattern_ip = pattern_ip
+        self.pattern_org = pattern_org
+        self.ipinfo_token = ipinfo_token
+        self.country_ignore = country_ignore
+        self.email_skip = []
+        self.smtp = Smtp()
+        self.mattermost = MatterMost()
+
+
+    def set_email_skip(self, email_skip):
+        """ Set Email Skip
+
+        REMOVER ISSO
+
+        Args:
+            email_skip (list): List of email address
+        """
+        self.email_skip = email_skip
+
+
+    def get_smtp_config(self):
+        """If SMTP is enabled, return it's configuration
+
+        Returns:
+            Dict - All SMTP config
+        """
+        if self.smtp:
+            config = {}
+            config['mailfrom'] = self.smtp.mailfrom
+            config['mailto'] = self.smtp.mailto
+            config['host'] = self.smtp.host
+            config['port'] = self.smtp.port
+            config['ssl'] = self.smtp.ssl
+            config['username'] = self.smtp.username
+            config['password'] = self.smtp.password
+            config['subject'] = self.smtp.subject
+            return config
+
+        return None
+
+
+    def get_mm_config(self):
+        """If MatterMost is enabled, return it's configuration
+
+        Returns:
+            Dict - All MatterMost config
+        """
+        if self.smtp:
+            config = {}
+            config['url'] = self.mattermost.get_url_hook()
+            config['channel'] = self.mattermost.channel
+            config['icon_url'] = self.mattermost.icon_url
+            config['username'] = self.mattermost.username
+            return config
+
+        return None
+
+
 def read_config(config_file):
     """read_config
 
@@ -21,10 +191,11 @@ def read_config(config_file):
 
     # Get General Section
     try:
-        my_config = Config(config.get('GENERAL', 'pattern_ip'),
-                           config.get('GENERAL', 'pattern_org'),
-                           config.get('GENERAL', 'ipinfo_token'),
-                           config.get('GENERAL', 'country_ignore'))
+        my_config = Config(
+            config.get('GENERAL', 'pattern_ip'),
+            config.get('GENERAL', 'pattern_org'),
+            config.get('GENERAL', 'ipinfo_token'),
+            config.get('GENERAL', 'country_ignore'))
 
     except configparser.NoOptionError:
         logging.info('Error reading config, GENERAL section')
@@ -39,22 +210,24 @@ def read_config(config_file):
     try:
         smtp_enabled = config.get('SMTP', 'enabled')
     except configparser.NoOptionError:
-        smtp_enabled = False
+        smtp_enabled = 'False'
 
     if strtobool(smtp_enabled):
         try:
-            my_config.set_smtp(True,
-                               config.get('SMTP', 'from'),
-                               config.get('SMTP', 'to'))
+            my_config.smtp.enable_smtp(
+                config.get('SMTP', 'from'),
+                config.get('SMTP', 'to'))
 
-            my_config.set_smtp_host(config.get('SMTP', 'host'),
-                                    config.get('SMTP', 'port'),
-                                    config.get('SMTP', 'ssl'))
+            my_config.smtp.set_smtp_host(
+                config.get('SMTP', 'host'),
+                config.get('SMTP', 'port'),
+                config.get('SMTP', 'ssl'))
 
-            my_config.set_smtp_auth(config.get('SMTP', 'user'),
-                                    config.get('SMTP', 'pass'))
+            my_config.smtp.set_auth(
+                config.get('SMTP', 'user'),
+                config.get('SMTP', 'pass'))
 
-            my_config.set_smtp_subject(config.get('SMTP', 'subject'))
+            my_config.smtp.subject = config.get('SMTP', 'subject')
 
         except configparser.NoOptionError:
             logging.info('Error reading config, SMTP section')
@@ -64,133 +237,21 @@ def read_config(config_file):
     try:
         mm_enabled = config.get('MATTERMOST', 'enabled')
     except configparser.NoOptionError:
-        mm_enabled = False
+        mm_enabled = 'False'
 
     if strtobool(mm_enabled):
         try:
-            my_config.set_mm(True,
-                             config.get('MATTERMOST', 'url'),
-                             config.get('MATTERMOST', 'api_key'))
+            my_config.mattermost.enable_mm(
+                config.get('MATTERMOST', 'url'),
+                config.get('MATTERMOST', 'api_key'))
 
-            my_config.set_mm_options(config.get('MATTERMOST', 'channel'),
-                                     config.get('MATTERMOST', 'icon_url'),
-                                     config.get('MATTERMOST', 'username'))
+            my_config.mattermost.set_options(
+                config.get('MATTERMOST', 'channel'),
+                config.get('MATTERMOST', 'icon_url'),
+                config.get('MATTERMOST', 'username'))
 
         except configparser.NoOptionError:
             logging.info('Error reading config, MATTERMOST section')
             sys.exit(1)
 
     return my_config
-
-
-class Config():
-    """Config
-
-    Class to store configurations
-    """
-
-    # pylint: disable=too-many-instance-attributes
-
-    def __init__(self, pattern_ip, pattern_org, ipinfo_token, country_ignore):
-
-        self.pattern_ip = pattern_ip
-        self.pattern_org = pattern_org
-        self.ipinfo_token = ipinfo_token
-        self.country_ignore = country_ignore
-        self.email_skip = []
-
-        self.smtp_enabled = False
-        self.smtp_from = None
-        self.smtp_to = None
-        self.smtp_host = None
-        self.smtp_port = None
-        self.smtp_ssl = None
-        self.smtp_user = None
-        self.smtp_pass = None
-        self.smtp_subject = None
-
-        self.mm_enabled = False
-        self.mm_url = None
-        self.mm_api_key = None
-        self.mm_channel = None
-        self.mm_icon_url = None
-        self.mm_username = None
-
-
-    def set_smtp(self, enabled, smtp_from, smtp_to):
-        """Define SMTP Notifications
-
-        Arguments:
-            enabled {bool} -- SMTP Notifications (Enabled/Disabled)
-            smtp_from {string} -- E-mail from
-            smtp_to {string} -- E-mail to
-        """
-        self.smtp_enabled = enabled
-        self.smtp_from = smtp_from
-        self.smtp_to = smtp_to
-
-
-    def set_smtp_host(self, smtp_host, smtp_port, smtp_ssl):
-        """Set SMTP Server
-
-        Arguments:
-            smtp_host {string} -- SMTP server
-            smtp_port {integer} -- SMTP port
-            smtp_ssl {string} -- SMTP ssl (True/False)
-        """
-        self.smtp_host = smtp_host
-        self.smtp_port = smtp_port
-        self.smtp_ssl = smtp_ssl
-
-
-    def set_smtp_auth(self, smtp_user, smtp_pass):
-        """Set SMTP Authentication Credentials
-
-        Arguments:
-            smtp_user {string} -- SMTP User Authentication
-            smtp_pass {string} -- SMTP User Password
-        """
-        self.smtp_user = smtp_user
-        self.smtp_pass = smtp_pass
-
-
-    def set_smtp_subject(self, smtp_subject):
-        """Set SMTP Subject
-
-        Arguments:
-            smtp_subject {string} -- SMTP Subject
-        """
-        self.smtp_subject = smtp_subject
-
-
-    def set_mm(self, enabled, mm_url, mm_api_key):
-        """Define MatterMost Notifications
-
-        Arguments:
-            enabled {string} -- MatterMost Notifications (Enabled/Disabled)
-            mm_url {string} -- MatterMost URL
-        """
-        self.mm_enabled = enabled
-        self.mm_url = mm_url
-        self.mm_api_key = mm_api_key
-
-
-    def set_mm_options(self, mm_channel, mm_icon_url, mm_username):
-        """Define MatterMost Options
-
-        Arguments:
-            channel {string} -- Name of the channel
-            icon_url {string} -- URL with an image
-            username {string} -- Username from
-        """
-        self.mm_channel = mm_channel
-        self.mm_icon_url = mm_icon_url
-        self.mm_username = mm_username
-
-    def set_email_skip(self, email_skip):
-        """ Set Email Skip
-
-        Args:
-            email_skip (list): List of email address
-        """
-        self.email_skip = email_skip

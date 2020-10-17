@@ -4,25 +4,13 @@ import logging
 import requests
 from loganom.utils import trim_report
 
-def mm_url_hook(url, api_key):
-    """Build MammerMost URL with Api_key
-
-    Arguments:
-        url {[type]} -- Mattermost URL
-        api_key {[type]} -- Mattermost Api_key
-
-    Returns:
-        string - full MM url with api_key
-    """
-    return f'{url}/hooks/{api_key}'
-
 
 def send_report_mm(plain_text, settings):
     """Send anomalies report by email
 
     Arguments:
         plain_text {string} -- Report body in plain text
-        settings {object} -- Settings from the class Config
+        settings (dict) -- Settings from the class Config.MatterMost
 
     Returns:
         bool -- True/False depending the request result
@@ -32,11 +20,10 @@ def send_report_mm(plain_text, settings):
 
     payload = dict()
     payload['text'] = report_text
-    payload['channel'] = settings.mm_channel
-    payload['icon_url'] = settings.mm_icon_url
-    payload['username'] = settings.mm_username
-
-    mm_url = mm_url_hook(settings.mm_url, settings.mm_api_key)
+    payload['channel'] = settings['channel']
+    payload['icon_url'] = settings['icon_url']
+    payload['username'] = settings['username']
+    mm_url = settings['url']
 
     try:
         response = requests.post(mm_url, json=payload)
