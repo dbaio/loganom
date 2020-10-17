@@ -125,10 +125,10 @@ def quota_high(settings, args):
         # Report in screen
         print('\n'.join(report_text))
 
-        if settings.smtp_enabled:
-            report_mail.send_report_mail(report_text, settings)
+        if settings.smtp.enabled:
+            report_mail.send_report_mail(report_text, settings.get_smtp_config())
 
-        if settings.mm_enabled:
-            report_mm.send_report_mm(report_text, settings)
+        if settings.mattermost.enabled:
+            report_mm.send_report_mm(report_text, settings.get_mm_config())
     else:
         logging.debug('No anomalies')
