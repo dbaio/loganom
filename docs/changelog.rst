@@ -1,9 +1,8 @@
 Changelog
 =========
 
-
-Unreleased
-----------
+Version 1.0.10
+--------------
 
 * Reformulate Config class
 * Add read_logfile() function
