@@ -85,15 +85,16 @@ With Debug
     DEBUG:	  Contry: US
     DEBUG:	    AS8075 Microsoft Corporation skipped by AS8075
     [...]
-
-    E-mail address: user@domain
-      92.36.X.Y - BA - Bihać - unknown - AS9146 BH Telecom d.d. Sarajevo
-      176.63.X.Y - HU - Maklár - catv-Y-X-195-207.catv.broadband.hu. - AS6830 Liberty Global B.V.
-      195.242.X.Y - UA - Chernihiv - unknown - AS34355 Chernigivtelecom LLC
-      188.76.X.Y - ES - Collado-Villalba - Y.X.76.188.dynamic.jazztel.es. - AS12479 Orange Espagne SA
-      87.116.X.Y - RS - Belgrade - unknown - AS31042 Serbia BroadBand-Srpske Kablovske mreze d.o.o.
-      188.69.X.Y - LT - Vilnius - md-Y-X-195-171.omni.lt. - AS8764 Telia Lietuva, AB
-
+    +------------------------------------------------------------------------------+
+    |                                  user@domain                                 |
+    +==============================================================================+
+    | 92.36.X.Y - BA - Bihać - unknown - AS9146 BH Telecom d.d. Sarajevo           |
+    | 176.63.X.Y - HU - Maklár - catv-Y-X-195-207.catv.broadband.hu. - AS6830 Libe |
+    | 195.242.X.Y - UA - Chernihiv - unknown - AS34355 Chernigivtelecom LLC        |
+    | 188.76.X.Y - ES - Collado-Villalba - Y.X.76.188.dynamic.jazztel.es. - AS1247 |
+    | 87.116.X.Y - RS - Belgrade - unknown - AS31042 Serbia BroadBand-Srpske Kablo |
+    | 188.69.X.Y - LT - Vilnius - md-Y-X-195-171.omni.lt. - AS8764 Telia Lietuva,  |
+    +------------------------------------------------------------------------------+
 
 Script with logtail and virtualenv
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

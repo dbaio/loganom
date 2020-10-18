@@ -7,6 +7,7 @@ import ipaddress
 import re
 
 from loganom import utils, process_mail, report_mail, report_mm, exec_cmd
+from loganom.report import Report
 
 
 def postfix_sasl(settings, args):
@@ -20,12 +21,11 @@ def postfix_sasl(settings, args):
     pattern_sasl = 'sasl_method='
 
     logging.debug('Log file: %s', args.log.name)
-    logfile_path = args.log.name
 
     # Initialize empty dictionary
     dict_general = defaultdict(set)
 
-    for line in utils.read_logfile(logfile_path, pattern_sasl):
+    for line in utils.read_logfile(args.log.name, pattern_sasl):
         lista = line.split()
         mail_user = lista.pop().split('sasl_username=')[-1]
 
@@ -49,7 +49,6 @@ def postfix_sasl(settings, args):
     temp_dict = process_mail.process_mail(dict_general, temp_set, settings)
 
     # Results
-    report_text = []
     if len(temp_dict) > 0:
         for email in temp_dict.keys():
 
@@ -57,22 +56,22 @@ def postfix_sasl(settings, args):
             if args.exec:
                 exec_cmd.external_exec(args.exec.name, email)
 
-            temp_text = f"E-mail address: {email}\n"
-            for ip_info in temp_dict[email]:
-                temp_text += f"\t{ip_info}\n"
-            report_text.append(temp_text)
+            report_obj = Report('multi', temp_dict)
 
         # Report in screen
-        print('\n'.join(report_text))
+        print(report_obj.generate_table())
 
         if settings.smtp.enabled:
-            report_mail.send_report_mail(report_text, settings.get_smtp_config())
+            report_mail.send_report_mail(
+                report_obj.generate_table(border=False, short=False),
+                settings.get_smtp_config())
 
         if settings.mattermost.enabled:
-            report_mm.send_report_mm(report_text, settings.get_mm_config())
+            report_mm.send_report_mm(
+                report_obj.generate_table(),
+                settings.get_mm_config())
     else:
         logging.debug('No anomalies')
-
 
 
 def quota_high(settings, args):
@@ -86,12 +85,11 @@ def quota_high(settings, args):
     pattern = args.quota_message
 
     logging.debug('Log file: %s', args.log.name)
-    logfile_path = args.log.name
 
     # Initialize empty dictionary
     dict_general = defaultdict(int)
 
-    for line in utils.read_logfile(logfile_path, pattern):
+    for line in utils.read_logfile(args.log.name, pattern):
         mail_user_raw = re.search('from=<.*?>', line)
 
         mail_user = utils.clean_email(mail_user_raw.group(0))
@@ -99,20 +97,17 @@ def quota_high(settings, args):
         if mail_user:
             dict_general[mail_user] += 1
 
-
     # Results
     email_quota_count = 0
-    report_text = []
-    report_text.append(f"Email address(es) that hit quota limit (> {args.quota_limit}):")
+    dict_final = defaultdict(int)
 
     for email, quota_counter in dict_general.items():
-
         logging.debug('%s (%i)', email, quota_counter)
 
         if quota_counter > int(args.quota_limit):
 
             if email not in settings.email_skip:
-                report_text.append(f"  {email} ({quota_counter})")
+                dict_final[email] = quota_counter
                 email_quota_count += 1
 
                 # Execute external script when an anomaly is found for each e-mail
@@ -122,13 +117,22 @@ def quota_high(settings, args):
                 logging.debug('\tskipped by email_skip config')
 
     if email_quota_count > 0:
+        report_obj = Report('single', dict_final)
+        report_text  = f"Email address(es) that hit quota limit (> {args.quota_limit}):\n\n"
+
+        report_text_mm = report_text
+        report_text_mm += report_obj.generate_table()
+
+        report_text_email = report_text
+        report_text_email += report_obj.generate_table(border=False, short=False)
+
         # Report in screen
-        print('\n'.join(report_text))
+        print(report_text_mm)
 
         if settings.smtp.enabled:
-            report_mail.send_report_mail(report_text, settings.get_smtp_config())
+            report_mail.send_report_mail(report_text_email, settings.get_smtp_config())
 
         if settings.mattermost.enabled:
-            report_mm.send_report_mm(report_text, settings.get_mm_config())
+            report_mm.send_report_mm(report_text_mm, settings.get_mm_config())
     else:
         logging.debug('No anomalies')

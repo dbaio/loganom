@@ -2,7 +2,6 @@
 
 import logging
 import requests
-from loganom.utils import trim_report
 
 
 def send_report_mm(plain_text, settings):
@@ -16,7 +15,9 @@ def send_report_mm(plain_text, settings):
         bool -- True/False depending the request result
     """
 
-    report_text = '\n'.join(trim_report(plain_text))
+    report_text = "```\n"
+    report_text += plain_text
+    report_text += "\n```"
 
     payload = dict()
     payload['text'] = report_text

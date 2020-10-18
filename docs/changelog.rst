@@ -7,6 +7,7 @@ Unreleased
 
 * Reformulate Config class
 * Add read_logfile() function
+* Add report model and improve output with texttable
 
 Version 1.0.9
 -------------

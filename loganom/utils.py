@@ -115,6 +115,7 @@ def check_org_on_whitelist(org_name, pattern_org):
 
     return False
 
+
 def trim_report(report_text):
     """Let report text smaller for it not generate spam in the output
 
@@ -136,6 +137,7 @@ def trim_report(report_text):
             report_trimmed.append(report_full)
 
     return report_trimmed
+
 
 def read_logfile(file, pattern):
     """Read a log file and return just the lines that match with a simple pattern.
