@@ -123,8 +123,8 @@ Script with logtail and virtualenv
     exit $RET
 
 
-If you want to execute **loganom** for instance, in every hour, you can use
-**logtail** to get just the log lines that weren't processed yet, this will
+If you want to execute **loganom**, for instance, in every hour, you can use
+**logtail** to get just the log lines that weren't processed yet; this will
 avoid reprocessing all log.
 
 

@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'loganom'
-copyright = '2020, Danilo G. Baio'
+copyright = '2020-2021, Danilo G. Baio'
 author = 'Danilo G. Baio'
 
 # The full version, including alpha/beta/rc tags

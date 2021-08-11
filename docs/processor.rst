@@ -11,11 +11,11 @@ Postfix SASL
 
 It checks accounts authentication through postfix sasl.
 
-Usually when an account is compromised, attackers use several machines from
+Usually, when an account is compromised, attackers use several machines from
 their botnets to send emails (spam/virus/phishing/etc) with that credential.
 
-This can be observed when a user that usually connects from the same country,
-suddenly send emails from all around the world.
+This can be observed when a user who usually connects from the same country
+suddenly sends emails from worldwide.
 
 IP addresses can be ignored, based on a list of name patterns (dns reverse
 name) or based on it's ASN, with the config options *pattern_org* and
@@ -53,6 +53,6 @@ Example of reject message:
 If the number of these reject messages from the same sender became too high
 (default 150), it is considered an anomaly.
 
-The number of rejecting messages and the reject message itself can be
+The number of rejected messages and the reject message itself can be
 customized, see more in :doc:`usage` section.
 
