@@ -18,15 +18,15 @@ loganom
     :target: https://pypi.org/project/loganom/
 
 
-**loganom** is a tool that checks mail log files in search for anomalies.
+**loganom** is a tool that checks mail log files in search of anomalies.
 
 The first processor check postfix sasl authentication.
 
-Usually when an account is compromised, attackers use several machines from
+Usually, when an account is compromised, attackers use several machines from
 their botnets to send emails (spam/virus/phishing/etc) with that credential.
 
-This can be observed when a user that usually connects from the same country,
-suddenly send emails from all around the world.
+This can be observed when a user who usually connects from the same country
+suddenly sends emails from worldwide.
 
 See more about in the :doc:`processor` section.
 
