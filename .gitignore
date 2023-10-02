@@ -59,5 +59,6 @@ target/
 # Local
 .tmp/
 .vscode/
+.idea
 config.ini
 
