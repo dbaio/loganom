@@ -18,11 +18,11 @@
 # -- Project information -----------------------------------------------------
 
 project = 'loganom'
-copyright = '2020-2021, Danilo G. Baio'
+copyright = '2020-2023, Danilo G. Baio'
 author = 'Danilo G. Baio'
 
 # The full version, including alpha/beta/rc tags
-release = '1.0.10'
+release = '1.1.0'
 
 
 # -- General configuration ---------------------------------------------------

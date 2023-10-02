@@ -7,7 +7,7 @@ with open("README.rst", "r") as fh:
 
 setup(
     name="loganom",
-    version="1.0.10",
+    version="1.1.0",
     author="Danilo G. Baio",
     author_email="dbaio@bsd.com.br",
     description="Log analyzer to discover anomalies",
@@ -27,7 +27,8 @@ setup(
         'dnspython',
         'requests',
         'marrow.mailer',
-        'texttable'
+        'texttable',
+        'pymsteams'
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
