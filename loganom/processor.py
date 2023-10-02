@@ -6,7 +6,7 @@ import logging
 import ipaddress
 import re
 
-from loganom import utils, process_mail, report_mail, report_mm, exec_cmd
+from loganom import utils, process_mail, report_mail, report_mm, report_teams, exec_cmd
 from loganom.report import Report
 
 
@@ -70,6 +70,11 @@ def postfix_sasl(settings, args):
             report_mm.send_report_mm(
                 report_obj.generate_table(),
                 settings.get_mm_config())
+
+        if settings.teams.enabled:
+            report_teams.send_report_teams(
+                report_obj.generate_table(border=False, short=True),
+                settings.get_teams_config())
     else:
         logging.debug('No anomalies')
 
@@ -126,6 +131,9 @@ def quota_high(settings, args):
         report_text_email = report_text
         report_text_email += report_obj.generate_table(border=False, short=False)
 
+        report_text_teams = report_text
+        report_text_teams += report_obj.generate_table(border=False, short=True)
+
         # Report in screen
         print(report_text_mm)
 
@@ -134,5 +142,8 @@ def quota_high(settings, args):
 
         if settings.mattermost.enabled:
             report_mm.send_report_mm(report_text_mm, settings.get_mm_config())
+
+        if settings.teams.enabled:
+            report_teams.send_report_teams(report_text_teams, settings.get_teams_config())
     else:
         logging.debug('No anomalies')

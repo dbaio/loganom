@@ -106,6 +106,40 @@ class MatterMost():
         return f'{self.url}/hooks/{self.api_key}'
 
 
+class Teams():
+    """Microsoft Teams Config Options"""
+
+    def __init__(self):
+        """Initialize Microsoft Teams Config"""
+        self.enabled = False
+        self.url = None
+        self.title = None
+        self.button_caption = None
+        self.button_url = None
+
+    def enable_teams(self, url):
+        """Initialize Microsoft Teams Config
+
+        Arguments:
+            url {string} -- Microsoft Teams Webhook URL
+        """
+        self.enabled = True
+        self.url = url
+
+
+    def set_options(self, title, button_caption, button_url):
+        """Define MatterMost Options
+
+        Arguments:
+            title {string} -- Connector Card Title
+            button_caption {string} -- Button caption at the bottom of the Connector Card
+            button_url {string} -- Button URL at the bottom of the Connector Card
+        """
+        self.title = title
+        self.button_caption = button_caption
+        self.button_url = button_url
+
+
 class Config():
     """Config Class to store all configurations."""
 
@@ -125,6 +159,7 @@ class Config():
         self.email_skip = []
         self.smtp = Smtp()
         self.mattermost = MatterMost()
+        self.teams = Teams()
 
 
     def set_email_skip(self, email_skip):
@@ -165,7 +200,7 @@ class Config():
         Returns:
             Dict - All MatterMost config
         """
-        if self.smtp:
+        if self.mattermost:
             config = {}
             config['url'] = self.mattermost.get_url_hook()
             config['channel'] = self.mattermost.channel
@@ -175,6 +210,22 @@ class Config():
 
         return None
 
+
+    def get_teams_config(self):
+        """If Microsoft Teams is enabled, return it's configuration
+
+        Returns:
+            Dict - All Microsoft Teams config
+        """
+        if self.teams:
+            config = {}
+            config['url'] = self.teams.url
+            config['title'] = self.teams.title
+            config['button_caption'] = self.teams.button_caption
+            config['button_url'] = self.teams.button_url
+            return config
+
+        return None
 
 def read_config(config_file):
     """read_config
@@ -253,5 +304,26 @@ def read_config(config_file):
         except configparser.NoOptionError:
             logging.info('Error reading config, MATTERMOST section')
             sys.exit(1)
+
+
+    # Get Microsoft Teams Section
+    try:
+        teams_enabled = config.get('TEAMS', 'enabled')
+    except configparser.NoOptionError:
+        teams_enabled = 'False'
+
+    if strtobool(teams_enabled):
+        try:
+            my_config.teams.enable_teams(config.get('TEAMS', 'url'))
+
+            my_config.teams.set_options(
+                config.get('TEAMS', 'title'),
+                config.get('TEAMS', 'button_caption'),
+                config.get('TEAMS', 'button_url'))
+
+        except configparser.NoOptionError:
+            logging.info('Error reading config, TEAMS section')
+            sys.exit(1)
+
 
     return my_config
