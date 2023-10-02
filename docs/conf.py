@@ -22,7 +22,7 @@ copyright = '2020-2023, Danilo G. Baio'
 author = 'Danilo G. Baio'
 
 # The full version, including alpha/beta/rc tags
-release = '1.1.0'
+release = '1.1.1'
 
 
 # -- General configuration ---------------------------------------------------

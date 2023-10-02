@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 1.1.0
+Version 1.1.1
 -------------
 
 * Add the option to send reports via Microsoft Teams
